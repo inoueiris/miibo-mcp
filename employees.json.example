@@ -1,0 +1,12 @@
+{
+  "admin_api_key": "Admin APIキー（エージェントに紐づかない管理用。作成/更新/一覧APIで使用）",
+  "admin_uid": "miibo管理者のユーザーID（Admin APIキー発行欄に表示）",
+  "default_api_key": "チャット用APIキー（エージェントに紐づくキー。全社員共通の場合ここに記入）",
+  "provider_name": "エージェント作成時の提供者名（任意。例: 株式会社サンプル）",
+  "employees": {
+    "アシスタント": { "agent_id": "ここにagent_id", "role": "汎用アシスタントAI" },
+    "リサーチャー": { "agent_id": "ここにagent_id", "role": "調査AI" },
+    "レビュアー": { "agent_id": "", "role": "批判役AI（未登録なら空のまま）" }
+  },
+  "_メモ": "社員ごとにAPIキーが異なる場合は各社員に api_key を追加。agent_id が空の社員は miibo_chat で呼べません（listでready:falseになる）"
+}
