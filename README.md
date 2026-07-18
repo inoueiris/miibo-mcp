@@ -31,3 +31,7 @@ Claude Code ──(MCP/stdio)── server.js ──(HTTPS)── miibo チャ�
 | `miibo_add_knowledge` | ナレッジデータストアへRAG素材を登録/更新（同labelで上書き） | チャット用 |
 
 キーは2系統: **チャット用APIキー**（エージェントに紐づく。`default_api_key` / 社員別 `api_key`）と **Admin APIキー**（`admin_api_key` + `admin_uid`。エージェント作成・一覧に使用）。
+
+## ライセンス
+
+MIT License（[LICENSE](LICENSE) を参照）
