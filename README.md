@@ -32,6 +32,23 @@ Claude Code ──(MCP/stdio)── server.js ──(HTTPS)── miibo チャ�
 
 キーは2系統: **チャット用APIキー**（エージェントに紐づく。`default_api_key` / 社員別 `api_key`）と **Admin APIキー**（`admin_api_key` + `admin_uid`。エージェント作成・一覧に使用）。
 
+## ステート（`state`）の注意点
+
+`miibo_chat` の `state` は**オブジェクトのまま**送る必要がある。JSON文字列化して送るとチャットAPIは `HTTP 400`（空ボディ）を返し、応答が一切得られない。
+
+渡した値をAIに読ませるには、エージェントのシステムプロンプト側に `#{キー名}` と書いて埋め込んでおくこと。埋め込みが無いと、値を渡しても応答には反映されない。
+
+```
+# プロンプト側
+お客様のお名前: #{name}
+会社名: #{company}
+```
+
+```jsonc
+// miibo_chat の引数
+{ "employee": "みお", "utterance": "こんにちは", "state": { "name": "井上", "company": "ENWA" } }
+```
+
 ## ライセンス
 
 MIT License（[LICENSE](LICENSE) を参照）
