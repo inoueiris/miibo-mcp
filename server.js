@@ -177,7 +177,11 @@ server.registerTool(
       employee: z.string().describe('社員名。miibo_list_employees で確認できる'),
       utterance: z.string().describe('社員への発話（質問・依頼・議題など）'),
       uid: z.string().optional().describe('会話スレッドID。省略時は "claude-code-<社員名>"'),
-      state: z.record(z.string(), z.string()).optional().describe('ユーザーステート（miiboのstate変数に渡すキーと値）'),
+      state: z.record(z.string(), z.string()).optional().describe(
+        'ユーザーステート（miiboのstate変数に渡すキーと値）。' +
+        '値をAIに読ませるには、エージェントのシステムプロンプト側に #{キー名} と書いて埋め込んでおく必要がある。' +
+        'プロンプトに埋め込みが無いと、渡しても応答には反映されない。'
+      ),
     },
   },
   async ({ employee, utterance, uid, state }) => {
@@ -190,7 +194,9 @@ server.registerTool(
       utterance,
       uid: uid || `claude-code-${employee}`,
     }
-    if (state) body.state = JSON.stringify(state)
+    // state はオブジェクトのまま渡す。JSON文字列化して送ると miibo は HTTP 400（空ボディ）を返す。
+    // 実機検証済み: state=文字列 → 400 / state=オブジェクト → 200。
+    if (state) body.state = state
 
     const res = await fetch(MIIBO_API_URL, {
       method: 'POST',
