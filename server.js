@@ -58,7 +58,7 @@ function resolveAdmin(config) {
 
 async function miiboAdminFetch(config, method, path, body) {
   const { apiKey, uid } = resolveAdmin(config)
-  const res = await fetch(`${MIIBO_API_URL.replace('/api', '')}/admin/${uid}${path}`, {
+  const res = await fetch(`${new URL(MIIBO_API_URL).origin}/admin/${uid}${path}`, {
     method,
     headers: { 'X-API-Key': apiKey, 'Content-Type': 'application/json' },
     body: body ? JSON.stringify(body) : undefined,
